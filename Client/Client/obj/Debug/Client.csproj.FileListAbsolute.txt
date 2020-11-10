@@ -1,0 +1,18 @@
+c:\users\щука\documents\visual studio 2015\Work\Chat2\Client\Client\bin\Debug\Client.exe.config
+c:\users\щука\documents\visual studio 2015\Work\Chat2\Client\Client\bin\Debug\Client.exe
+c:\users\щука\documents\visual studio 2015\Work\Chat2\Client\Client\bin\Debug\Client.pdb
+c:\users\щука\documents\visual studio 2015\Work\Chat2\Client\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+c:\users\щука\documents\visual studio 2015\Work\Chat2\Client\Client\obj\Debug\Client.ChatForm.resources
+c:\users\щука\documents\visual studio 2015\Work\Chat2\Client\Client\obj\Debug\Client.Properties.Resources.resources
+c:\users\щука\documents\visual studio 2015\Work\Chat2\Client\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+c:\users\щука\documents\visual studio 2015\Work\Chat2\Client\Client\obj\Debug\Client.exe
+c:\users\щука\documents\visual studio 2015\Work\Chat2\Client\Client\obj\Debug\Client.pdb
+C:\Users\iwhis\Chat2\Client\Client\bin\Debug\Client.exe.config
+C:\Users\iwhis\Chat2\Client\Client\bin\Debug\Client.exe
+C:\Users\iwhis\Chat2\Client\Client\bin\Debug\Client.pdb
+C:\Users\iwhis\Chat2\Client\Client\obj\Debug\Client.csprojAssemblyReference.cache
+C:\Users\iwhis\Chat2\Client\Client\obj\Debug\Client.ChatForm.resources
+C:\Users\iwhis\Chat2\Client\Client\obj\Debug\Client.Properties.Resources.resources
+C:\Users\iwhis\Chat2\Client\Client\obj\Debug\Client.csproj.GenerateResource.cache
+C:\Users\iwhis\Chat2\Client\Client\obj\Debug\Client.exe
+C:\Users\iwhis\Chat2\Client\Client\obj\Debug\Client.pdb
