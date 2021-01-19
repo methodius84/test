@@ -25,14 +25,14 @@ namespace Server
         {
             Console.WriteLine($"User {Username} connected.");
             CountUsers++;
-            SendGlobalMessage($"Пользователь {Username} подключился к чату.", "Black");
+            SendGlobalMessage($"Пользователь {Username} подключился к чату. total users {CountUsers}", "Black");
             SendUserList();
         };
         public static event UserEvent UserDisconnected = (Username) =>
         {
             Console.WriteLine($"User {Username} disconnected.");
             CountUsers--;
-            SendGlobalMessage($"Пользователь {Username} отключился от чата.","Black");
+            SendGlobalMessage($"Пользователь {Username} отключился от чата. Total users {CountUsers}","Black");
             SendUserList();
         };
         public static List<User> UserList = new List<User>();

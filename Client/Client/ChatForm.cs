@@ -22,7 +22,7 @@ namespace Client
         private Socket _serverSocket;
         private Thread listenThread;
         private string _host = "127.0.0.1";
-        private int _port = 49765;
+        private int _port = 49675;
         public ChatForm()
         {
             InitializeComponent();
@@ -82,7 +82,6 @@ namespace Client
 
         private Color getColor(string text)
         {
-            //govno
             if (Color.Red.Name.Contains(text))
                 return Color.Red;
             return Color.Black;
@@ -129,7 +128,7 @@ namespace Client
 
         public void handleCommand(string cmd)
         {
-            
+                //Console.WriteLine(cmd);
                 string[] commands = cmd.Split('#');
                 int countCommands = commands.Length;
                 for (int i = 0; i < countCommands; i++)
