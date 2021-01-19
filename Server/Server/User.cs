@@ -148,6 +148,7 @@ namespace Server
         }
         public void SendMessage(string content,string clr)
         {
+            Console.WriteLine(content);
             Send($"#msg|{content}|{clr}");
         }
         public void Send(byte[] buffer)
