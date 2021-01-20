@@ -12,11 +12,21 @@ namespace Server
     public class User
     {
         private Thread _userThread;
+        private string _userRole;
         private string _userName;
         private bool AuthSuccess = false;
+        public override string ToString()
+        {
+            return $"{_userRole} {_userName}";
+        }
         public string Username
         {
             get { return _userName; }
+        }
+        public string Userrole
+        {
+            get { return _userRole; }
+            set { _userRole = value; }
         }
         private Socket _userHandle;
         public User(Socket handle)
@@ -59,6 +69,7 @@ namespace Server
                 }
             }
             _userName = Name;
+            _userRole = "user";
             Server.NewUser(this);
 
             AuthSuccess = true;
@@ -168,7 +179,7 @@ namespace Server
                         bool c=false;
                         for (int j = 0; j < Server.UserList.Count; j++)
                         {
-                            if (Server.UserList[j].Username.Contains("admin"))
+                            if (Server.UserList[j].Userrole.Contains("admin"))
                                 {
                                 SendMessage($"sosi, u nas est' admin", "Red");
                                 c = true;
@@ -176,7 +187,8 @@ namespace Server
                         }
                         if (c==false)
                         {
-                            this._userName = $"admin {_userName}";
+                            //this._userName = $"admin {_userName}";
+                            this._userRole = "admin";
                             Send($"#newname#userlist|{_userName}");
                         }
                         
@@ -202,6 +214,10 @@ namespace Server
                         }
                         else Server.SendGlobalMessage("You are not an admin,bruv", "Red");
                     }
+                    /*if (currentCommand.Contains("bot_enter")
+                    {
+                        Ser
+                    }*/
                     if (currentCommand.Contains("davai"))
                     {
                         Server.SendUserList();

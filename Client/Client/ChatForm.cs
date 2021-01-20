@@ -181,9 +181,8 @@ namespace Client
                         userList.Invoke((MethodInvoker)delegate { userList.Items.Clear(); });
                         for(int j = 0;j < countUsers;j++)
                         {
-                            userList.Invoke((MethodInvoker)delegate { userList.Items.Add(Users[j]) ; });
+                            userList.Invoke((MethodInvoker)delegate { userList.Items.Add(Users[j]); });
                         }
-
                     }
                     if(currentCommand.Contains("gfile"))
                     {
