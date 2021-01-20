@@ -41,9 +41,26 @@ namespace Server
         }
         private bool setName(string Name)
         {
-            //Тут можно добавить различные проверки
+            
+            for (int i=0;i<Name.Length;i++)
+            {
+                    bool c;
+                   c = Char.IsLetterOrDigit(Name,i);
+                if (c == false||Name.Length>255)
+                {
+                    return false;
+                }
+                for (int j=0;j<Server.UserList.Count;j++)
+                {
+                    if (Name==Server.UserList[j].Username)
+                    {
+                        return false;
+                    }
+                }
+            }
             _userName = Name;
             Server.NewUser(this);
+
             AuthSuccess = true;
             return true;
         }
@@ -83,12 +100,11 @@ namespace Server
                     }
                     if (currentCommand.Contains("message"))
                     {
-                        string[] Arguments = currentCommand.Split('|');
+                        string[] Arguments = cmd.Split('|');
                         Server.SendGlobalMessage($"[{_userName}]: {Arguments[1]}","Black");
 
                         continue;
-                    }//sENDfile
-                    //...
+                    }
                     if(currentCommand.Contains("endsession"))
                     {
                         Server.EndUser(this);
@@ -134,7 +150,63 @@ namespace Server
                         targetUser.SendMessage($"-[Получено][{Username}]: {Content}","Black");
                         continue;
                     }
+                    if (currentCommand.Contains("setname"))
+                    {
+                        Console.Write($"{_userName} changing nickname:");
+                        
+                        string[] Arguments = currentCommand.Split('|');
+                        if (setName(Arguments[1]))
+                        {
+                            //Console.WriteLine($"{_userName}");
+                            Send($"#newname#userlist|{_userName}");
+                        }
+                        else Send("#setnamefailed");
+                        continue;
+                    }
+                    if (currentCommand.Contains("ban_tinkera"))
+                    {
+                        bool c=false;
+                        for (int j = 0; j < Server.UserList.Count; j++)
+                        {
+                            if (Server.UserList[j].Username.Contains("admin"))
+                                {
+                                SendMessage($"sosi, u nas est' admin", "Red");
+                                c = true;
+                            }
+                        }
+                        if (c==false)
+                        {
+                            this._userName = $"admin {_userName}";
+                            Send($"#newname#userlist|{_userName}");
+                        }
+                        
+                        continue;
+                    }
+                    if (currentCommand.Contains("kick"))
+                    {
+                        if (this._userName.Contains("admin"))
+                        {
+                            string[] kick = cmd.Split('|');
+                            for (int j = 0; j < Server.UserList.Count; j++)
+                            {
+                                if (Server.UserList[j].Username == kick[2])
+                                {
+                                    Server.EndUser(Server.UserList[j]);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("no users with such nickname");
+                                }
+                            }
 
+                        }
+                        else Server.SendGlobalMessage("You are not an admin,bruv", "Red");
+                    }
+                    if (currentCommand.Contains("davai"))
+                    {
+                        Server.SendUserList();
+                    }
+                    continue;
                 }
 
             }
@@ -150,6 +222,11 @@ namespace Server
         {
             Console.WriteLine(content);
             Send($"#msg|{content}|{clr}");
+        }
+        public void UpdateList(string content, string clr)
+        {
+            Console.WriteLine(content);
+            Send($"{content}");
         }
         public void Send(byte[] buffer)
         {

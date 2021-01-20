@@ -128,7 +128,7 @@ namespace Client
 
         public void handleCommand(string cmd)
         {
-                //Console.WriteLine(cmd);
+            //Console.WriteLine(cmd);
                 string[] commands = cmd.Split('#');
                 int countCommands = commands.Length;
                 for (int i = 0; i < countCommands; i++)
@@ -140,7 +140,6 @@ namespace Client
                         continue;
                     if (currentCommand.Contains("setnamesuccess"))
                     {
-                        
                         
                         //Из-за того что программа пыталась получить доступ к контролам из другого потока вылетал эксепщен и поля не разблокировались
 
@@ -156,6 +155,12 @@ namespace Client
                         });
                         continue;
                     }
+                    if (currentCommand.Contains("newname"))
+                    {
+                        string[] Arguments = cmd.Split('|');
+                        AddMessage($"Your new name is {Arguments[1]}");
+                        Send("davai");
+                    }
                     if(currentCommand.Contains("setnamefailed"))
                     {
                         AddMessage("Неверный ник!");
@@ -163,9 +168,10 @@ namespace Client
                     }
                     if(currentCommand.Contains("msg"))
                     {
-                        string[] Arguments = currentCommand.Split('|');
+                        string[] Arguments = cmd.Split('|');
                         AddMessage(Arguments[1], Arguments[2]);
                         continue;
+                        
                     }
 
                     if(currentCommand.Contains("userlist"))
@@ -177,7 +183,6 @@ namespace Client
                         {
                             userList.Invoke((MethodInvoker)delegate { userList.Items.Add(Users[j]) ; });
                         }
-                        continue;
 
                     }
                     if(currentCommand.Contains("gfile"))
@@ -205,9 +210,9 @@ namespace Client
                 }
                 catch (Exception exp) { Console.WriteLine("Error with handleCommand: " + exp.Message); }
 
-            }
+                }
 
-            
+
         }
         public void listner()
         {
@@ -260,6 +265,5 @@ namespace Client
                 messageData.Text = string.Empty;
             }
         }
-
     }
 }

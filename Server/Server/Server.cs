@@ -88,6 +88,13 @@ namespace Server
 
             SendAllUsers(userList);
         }
+        public static void SendGlobalUpdate(string content, string clr)
+        {
+            for (int i = 0; i < CountUsers; i++)
+            {
+                UserList[i].UpdateList(content, clr);
+            }
+        }
         public static void SendGlobalMessage(string content,string clr)
         {
             for(int i = 0;i < CountUsers;i++)
