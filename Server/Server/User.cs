@@ -122,6 +122,28 @@ namespace Server
                 answers[3] = "нашли новый штамп covid-19, но я подожду pro версию";
                 answers[4] = "Сессия. Душно. Откройте форточку.";
             }
+            if (current.Contains("weather"))
+            {
+                answers[0] = "Погода купить компедос";
+                answers[1] = "Даже собаку в такую погоду не выгоню... а тебя выгнал бы";
+                answers[2] = "Владимир Путин молодец, построил он себе дворец";
+                answers[3] = "-20, как птс";
+                answers[4] = "Холодно";
+            }
+            if (current.Contains("roulette"))
+            { return "хочет испытать удачу"; }
+            if (current.Contains("start")) 
+            {
+                return "крутит барабан...";
+            }
+            if (current.Contains("making shot"))
+            { return "производит выстрел....."; }
+            if (current.Contains("result"))
+            {
+                answers[0] = "dead";
+                answers[1] = "alive";
+                return answers[r.Next(0,2)];
+            }
             return answers[r.Next(0, 5)];
         }
         private void handleCommand(string cmd)
@@ -153,6 +175,53 @@ namespace Server
                             Server.SendGlobalMessage($"{_userName}: {Answer(currentCommand)}", "Red");
                         }
                         if (currentCommand.Contains("talk"))
+                        {
+                            Server.SendGlobalMessage($"{_userName}: {Answer(currentCommand)}", "Red");
+                        }
+                        if (currentCommand.Contains("guess my, 1 to 100? enter the number:"))
+                        {
+                            Server.SendGlobalMessage($"{_userName}: guess my, 1 to 100? enter the number:", "Red");
+                        }
+                        if (currentCommand.Contains("u were right"))
+                        {
+                            Server.SendGlobalMessage($"{_userName}: u were right", "Red");
+                        }
+                        if (currentCommand.Contains("bigger"))
+                        {
+                            Server.SendGlobalMessage($"{_userName}: mine number is bigger", "Red");
+                        }
+                        if (currentCommand.Contains("smaller"))
+                        {
+                            Server.SendGlobalMessage($"{_userName}: mine number is smaller", "Red");
+                        }
+                        if (currentCommand.Contains("enter a number"))
+                        {
+                            Server.SendGlobalMessage($"{_userName}: it is not a number. Enter correctly", "Red");
+                        }
+                        if (currentCommand.Contains("roulette"))
+                        {
+                            string[] temp = currentCommand.Split('|');
+                            Server.SendGlobalMessage($"{_userName}: {temp[1]} {Answer(currentCommand)}", "Red");
+                        }
+                        if (currentCommand.Contains("start"))
+                        {
+                            string[] temp = currentCommand.Split('|');
+                            Server.SendGlobalMessage($"{_userName}: {temp[1]} {Answer(currentCommand)}", "Red");
+                        }
+                        if (currentCommand.Contains("making shot"))
+                        {
+                            string[] temp = currentCommand.Split('|');
+                            Server.SendGlobalMessage($"{_userName}: {temp[1]} {Answer(currentCommand)}", "Red");
+                        }
+                        if (currentCommand.Contains("result"))
+                        {
+                            string[] temp = currentCommand.Split('|');
+                            string status = Answer(currentCommand);
+                            if (status == "alive")
+                            { Server.SendGlobalMessage($"{_userName}: Фартовый день для {temp[1]}, стимюзер выжил!", "Red"); }
+                            else { Server.SendGlobalMessage($"{_userName}: Помянем {temp[1]}, земля металлом...", "Red"); }
+                        }
+                        if (currentCommand.Contains("weather"))
                         {
                             Server.SendGlobalMessage($"{_userName}: {Answer(currentCommand)}", "Red");
                         }
@@ -192,9 +261,9 @@ namespace Server
                         if (currentCommand.Contains("message"))
                         {
                             string[] Arguments = cmd.Split('|');
-                            if (Arguments[1].Contains("gaben"))
+                            /*if (Arguments[1].Contains("gaben"))
                             { Server.SendGlobalMessage($"{Arguments[1]}", "Black"); }
-                            else { Server.SendGlobalMessage($"[{_userName}]: {Arguments[1]}", "Black"); }
+                            else */{ Server.SendGlobalMessage($"[{_userName}]: {Arguments[1]}", "Black"); }
                             continue;
                         }
                         if (currentCommand.Contains("endsession"))
