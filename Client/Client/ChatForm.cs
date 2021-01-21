@@ -124,11 +124,21 @@ namespace Client
             }
             catch { }
         }
+        public void SendBot(string Buffer)
+        {
+            try
+            {
+                _serverSocket.Send(Encoding.Unicode.GetBytes(Buffer));
+            }
+            catch { }
+        }
+
 
 
         public void handleCommand(string cmd)
         {
-            //Console.WriteLine(cmd);
+
+            Console.WriteLine(cmd);
                 string[] commands = cmd.Split('#');
                 int countCommands = commands.Length;
                 for (int i = 0; i < countCommands; i++)
@@ -252,15 +262,16 @@ namespace Client
                 string msgData = messageData.Text;
                 if (string.IsNullOrEmpty(msgData))
                     return;
-                if(msgData[0] == '"')
+                if (msgData[0] == '"')
                 {
                     string temp = msgData.Split(' ')[0];
-                    string content = msgData.Substring(temp.Length+1);
+                    string content = msgData.Substring(temp.Length + 1);
                     temp = temp.Replace("\"", string.Empty);
                     Send($"#private|{temp}|{content}");
                 }
-                else
-                    Send($"#message|{msgData}");
+                //else if (msgData.Contains("bot"))
+                    //{SendBot($"#bot|{msgData}"); }
+                else Send($"#message|{msgData}");
                 messageData.Text = string.Empty;
             }
         }
