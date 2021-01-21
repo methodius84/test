@@ -55,7 +55,7 @@ namespace Server
         {
             if (UserList.Contains(usr))
                 return;
-            UserList.Add(usr);
+            UserList.Add(usr);          
             UserConnected(usr.Username);
         }
         public static void EndUser(User usr)
@@ -83,10 +83,17 @@ namespace Server
 
             for(int i = 0;i < CountUsers;i++)
             {
-                userList += UserList[i].Username + ",";
+                userList += UserList[i].Userrole +' '+ UserList[i].Username + ",";
             }
 
             SendAllUsers(userList);
+        }
+        public static void SendGlobalUpdate(string content, string clr)
+        {
+            for (int i = 0; i < CountUsers; i++)
+            {
+                UserList[i].UpdateList(content, clr);
+            }
         }
         public static void SendGlobalMessage(string content,string clr)
         {
