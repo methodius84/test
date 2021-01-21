@@ -20,22 +20,24 @@ namespace Server
             public byte[] fileBuffer;
         }
         public static int CountUsers = 0;
-        public delegate void UserEvent(string Name);
-        public static event UserEvent UserConnected = (Username) =>
+        public delegate void UserEvent(string Name,string Role);
+        public delegate void BotEvent(string Name);
+        public static event UserEvent UserConnected = (Username,Role) =>
         {
-            Console.WriteLine($"User {Username} connected.");
+            Console.WriteLine($"{Role} {Username} connected.");
             CountUsers++;
-            SendGlobalMessage($"Пользователь {Username} подключился к чату. total users {CountUsers}", "Black");
+            SendGlobalMessage($"Пользователь {Username}, статус {Role} подключился к чату. total users {CountUsers}", "Black");
             SendUserList();
         };
-        public static event UserEvent UserDisconnected = (Username) =>
+        public static event UserEvent UserDisconnected = (Username,Role) =>
         {
             Console.WriteLine($"User {Username} disconnected.");
             CountUsers--;
-            SendGlobalMessage($"Пользователь {Username} отключился от чата. Total users {CountUsers}","Black");
+            SendGlobalMessage($"Пользователь {Username}, статус {Role} отключился от чата. Total users {CountUsers}","Black");
             SendUserList();
         };
         public static List<User> UserList = new List<User>();
+        //public static List<Bot> BotList = new List<Bot>();
         public static Socket ServerSocket;
         public const string Host = "127.0.0.1";
         public const int Port = 49675;
@@ -56,7 +58,7 @@ namespace Server
             if (UserList.Contains(usr))
                 return;
             UserList.Add(usr);          
-            UserConnected(usr.Username);
+            UserConnected(usr.Username,usr.Userrole);
         }
         public static void EndUser(User usr)
         {
@@ -64,7 +66,7 @@ namespace Server
                 return;
             UserList.Remove(usr);
             usr.End();
-            UserDisconnected(usr.Username);
+            UserDisconnected(usr.Username,usr.Userrole);
 
         }
 
@@ -77,6 +79,32 @@ namespace Server
             }
             return null;
         }
+        /*public static void NewBot(Bot bot)
+        {
+            if (BotList.Contains(bot))
+                return;
+            BotList.Add(bot);
+            BotConnected(bot.Botname);
+        }
+        public static void EndBot(Bot bot)
+        {
+            if (!BotList.Contains(bot))
+                return;
+            BotList.Remove(bot);
+            bot.End();
+            BotDisconnected(bot.Botname);
+
+        }
+
+        public static Bot GetBot(string Name)
+        {
+            for (int i = 0; i < CountUsers; i++)
+            {
+                if (BotList[i].Botname == Name)
+                    return BotList[i];
+            }
+            return null;
+        }*/
         public static void SendUserList()
         {
             string userList = "#userlist|";
@@ -97,8 +125,10 @@ namespace Server
         }
         public static void SendGlobalMessage(string content,string clr)
         {
-            for(int i = 0;i < CountUsers;i++)
+            Console.WriteLine(content);
+            for (int i = 0;i < CountUsers;i++)
             {
+                
                 UserList[i].SendMessage(content, clr);
             }
         }

@@ -21,11 +21,12 @@ namespace Server
             while(Server.Work)
             {
                 Socket handle = Server.ServerSocket.Accept();
+                Socket handle_bot = handle;
                 Console.WriteLine($"New connection: {handle.RemoteEndPoint.ToString()}");
                 new User(handle);
-
+                //new Bot(handle_bot);
             }
-            Console.WriteLine("Server closeing...");
+            Console.WriteLine("Server closing...");
 
         }
     }
